@@ -5,6 +5,7 @@ let ctx;
 let pickerCanvas;
 let pickerCtx;
 
+let history = [];
 
 chrome.runtime.onMessage.addListener((message) => {
   if (message.action === "toggleDrawing") {
@@ -27,7 +28,7 @@ function enableDrawing() {
     canvas.addEventListener("mouseup", stopDrawing);
 
     canvas.addEventListener("keydown", (e) => {
-        if (e.key === "z" || e.key === "Z" && e.key === e.ctrlKey) {
+        if (e.ctrlKey && (e.key === "z" || e.key === "Z")) {
             undoDrawing();
         }
         else if (e.key === "p" || e.key === "P" && e.ctrlKey === e.ctrlKey) {
@@ -38,8 +39,9 @@ function enableDrawing() {
 }
 
 function undoDrawing() {
-    if (drawingEnabled) {
-    // Implement undo functionality here
+    if (drawingEnabled && history.length > 0) {
+        const lastState = history.pop();
+        ctx.putImageData(lastState, 0, 0);
     }
 }
 function disableDrawing() {
@@ -51,6 +53,7 @@ function disableDrawing() {
 }
 function startDrawing(e) {
   if (drawingEnabled) {
+    history.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
     ctx.beginPath();
     ctx.moveTo(e.clientX, e.clientY);
   }
