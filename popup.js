@@ -6,10 +6,11 @@ toggleBtn.addEventListener('click', () => {
     isToggled = !isToggled;
     if (isToggled) {
         document.body.style.backgroundColor = 'red';
-        toggleBtn.textContent = 'Stop drawing';
+        toggleBtn.textContent = 'Drawing toggled!';
     } else {
         document.body.style.backgroundColor = 'green';
-        toggleBtn.textContent = 'Start drawing';
+        toggleBtn.textContent = 'Toggle drawing';
+
     }
 });
 
