@@ -25,8 +25,23 @@ function enableDrawing() {
     canvas.addEventListener("mousedown", startDrawing);
     canvas.addEventListener("mousemove", draw);
     canvas.addEventListener("mouseup", stopDrawing);
+
+    canvas.addEventListener("keydown", (e) => {
+        if (e.key === "z" || e.key === "Z" && e.key === e.ctrlKey) {
+            undoDrawing();
+        }
+        else if (e.key === "p" || e.key === "P" && e.ctrlKey === e.ctrlKey) {
+            print();
+        }
+    });
+
 }
 
+function undoDrawing() {
+    if (drawingEnabled) {
+    // Implement undo functionality here
+    }
+}
 function disableDrawing() {
   if (canvas) {
     canvas.remove();
